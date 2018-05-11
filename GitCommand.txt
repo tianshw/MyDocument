@@ -1,0 +1,48 @@
+
+Git下载路径：https://git-scm.com/downloads
+
+0. 打开Git Bash命令窗口
+
+***************** git基础命令 *****************
+
+1. $ git config --global user.name "tianshw" --声明当前电脑版本库的使用人
+2. $ git config --global user,email "wstsw123@163.com" --声明当前电脑版本库使用人的邮箱
+3. $ pwd --查看当前路径
+4. $ cd F://MyProject/Git   --跳转到要创建项目的路径
+5. $ mkdir mygit --当前文件夹下创建mygit文件夹
+6. $ cd mygit --跳转到新创建的mygit文件夹
+7. $ git init --把当前文件夹初始化为版本库，mygit文件夹里出现.git隐藏文件夹表示初始化成功
+-- ** --
+    要先把想进行版本控制的文件放到mygit文件夹里，git不能帮你创建文件，只能帮你管理文件
+-- ** --
+8. $ git add readme1.txt readme2.txt --添加两个文件到缓存区，添加多个文件用空格分隔
+9. $ git add -all --添加所有修改到缓存区
+-- ** --
+	添加时遇到【warning: LF will be replaced by CRLF in readme1.txt】时解决办法：
+	原因：git初始是基于linux开发的，和windows的记事本和word的编码不太一样，导致git不太兼容记事本工具。
+	$ git config --global core.autocrlf false --禁用自动转换，参数：true,false,input
+	$ git add readme1.txt readme2.txt --重新添加
+-- ** --
+10. $ git commit -m "我添加了两个文件" --提交修改到工作区并-m备注  
+11. $ git status --查看当前版本库状态，是否有修改了未提交的文件等
+12. $ cat readme1.txt --查看文档内容
+13. $ git diff readme1.txt --查看一个文档当前版本和上个版本的差异
+-- ** --
+	当工作区有改动的时候，临时区为空（没有进行git add），那么diff的对比是和上次的commit的记录进行对比的
+	当工作区有改动，临时区有东西的时候，diff是和临时区进行比较的。
+	内容一致不返回结果
+-- ** --
+14. $ git log --查看提交日志，后面跟--pretty=oneline可简化显示
+15. $ rm -rf .git --删除当前版本库，操作后会直接删除所有git相关记录且无法回滚(相当于物理删除git相关)，谨慎使用
+16. $ git reset -- hard HEAD^ --回滚到上一个版本，回滚到上上个版本用【HEAD^^】，回滚N个版本用【HEAD~n...】
+17. $ git reset -- hard 9915e9a --回滚到指定的版本，需要版本号的前6到7位
+18. $ git reflog --查看历史版本号和记录
+19. $ git checkout -- readme1.txt --撤销工作区最近一次的修改
+20. $ git reset HEAD readme1.txt --撤销已经add到缓存区的修改
+21. $ rm readme2.txt --删除版本库和本地的文件
+
+***************** 远程仓库 *****************
+
+22. $ ssh-keygen -t rsa -C "邮箱地址" --创建SSH KEY，一路回车确认即可，完成后把SSH公钥添加到github账户中
+23. $ git remote add origin git@github.com:tianshw/PythonStudy.git --本地项目关联github账户,origin可以自定义
+24. $ git push -u origin master --把本地项目的分支master推送到github，第一次推送加-u可以把本地和远程的分支关联起来
